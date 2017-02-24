@@ -70,38 +70,18 @@
     </head>
     <body>
             <div id="map"></div>
-       
+
     <script>
       // Note: This example requires that you consent to location sharing when
       // prompted by your browser. If you see the error "The Geolocation service
       // failed.", it means you probably did not give permission for the browser to
       // locate you.
-      var map;
-      var maxZoomService;
-      var infoWindow;
-
       function initMap() {
-         map = new google.maps.Map(document.getElementById('map'), {
+        var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -34.397, lng: 150.644},
-            infoWindow = new google.maps.InfoWindow();
-
-            maxZoomService = new google.maps.MaxZoomService();
-            map.addListener('click', showMaxZoom);
+          zoom: 6
         });
-          
-     function showMaxZoom(e) {
-         maxZoomService.getMaxZoomAtLatLng(e.latLng, function(response) {
-        if (response.status !== 'OK') {
-            infoWindow.setContent('Error in MaxZoomService');
-          } else {
-                infoWindow.setContent(
-                    'The maximum zoom at this location is: ' + response.zoom);
-          }
-           infoWindow.setPosition(e.latLng);
-           infoWindow.open(map);
-        });
-    }
-        //var infoWindow = new google.maps.InfoWindow({map: map});
+        var infoWindow = new google.maps.InfoWindow({map: map});
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
@@ -133,10 +113,5 @@
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAaaWjhjyWPkZ0leT9jkoMQDoC1GzzUoYM&callback=initMap">
     </script>
-              <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript">
-            app.initialize();
-        </script>
   </body>
 </html>
