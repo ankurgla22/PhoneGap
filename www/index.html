@@ -76,13 +76,32 @@
       // prompted by your browser. If you see the error "The Geolocation service
       // failed.", it means you probably did not give permission for the browser to
       // locate you.
+      var map;
+      var maxZoomService;
+      var infoWindow;
 
       function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
+         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -34.397, lng: 150.644},
-          zoom: 6
+            infoWindow = new google.maps.InfoWindow();
+
+            maxZoomService = new google.maps.MaxZoomService();
+            map.addListener('click', showMaxZoom);
         });
-        var infoWindow = new google.maps.InfoWindow({map: map});
+          
+     function showMaxZoom(e) {
+         maxZoomService.getMaxZoomAtLatLng(e.latLng, function(response) {
+        if (response.status !== 'OK') {
+            infoWindow.setContent('Error in MaxZoomService');
+          } else {
+                infoWindow.setContent(
+                    'The maximum zoom at this location is: ' + response.zoom);
+          }
+           infoWindow.setPosition(e.latLng);
+           infoWindow.open(map);
+        });
+    }
+        //var infoWindow = new google.maps.InfoWindow({map: map});
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
